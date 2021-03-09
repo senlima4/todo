@@ -1,0 +1,19 @@
+FROM node:lts
+
+ENV NODE_ENV=production
+
+WORKDIR /usr/src/app
+
+COPY ["package.json", "yarn.lock", "./"]
+
+RUN yarn install --frozen-lockfile --no-progress
+
+RUN yarn global add pm2
+
+RUN yarn build
+
+COPY ./build .
+
+EXPOSE 3000
+
+CMD ["pm2", "start", "main.js"]

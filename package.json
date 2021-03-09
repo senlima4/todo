@@ -1,0 +1,23 @@
+{
+  "name": "todo",
+  "version": "0.0.0",
+  "description": "note maybe",
+  "repository": "https://github.com/senlima4/todo.git",
+  "author": "Senlima Sun <senlima0430@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "lerna clean --yes && rm -rf node-modules",
+    "bootstrap": "lerna bootstrap --use-workspaces",
+    "client": "yarn workspace @todo/client",
+    "server": "yarn workspace @todo/server"
+  },
+  "devDependencies": {
+    "@todo/eslint-config": "*",
+    "lerna": "^4.0.0",
+    "prettier": "^2.2.1"
+  }
+}
