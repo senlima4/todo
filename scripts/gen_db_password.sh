@@ -1,3 +1,3 @@
 #!/bin/bash
 
-openssl rand -base64 30 | tr '+/' '-_'
+echo generate secret key: $(openssl rand -base64 30 | tr '+/' '-_')

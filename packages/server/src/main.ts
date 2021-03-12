@@ -21,7 +21,7 @@ app.use(
       extendedErrors: ['hint', 'detail', 'errcode'],
       graphiql: isDev,
       ignoreRBAC: false,
-      jwtPgTypeIdentifier: 'app_private.jwt_token',
+      jwtPgTypeIdentifier: 'app_public.jwt_token',
       jwtSecret: SECRET_KEY || 'random-secret-word',
       legacyRelations: 'omit',
       pgDefaultRole: 'anonymous_human',

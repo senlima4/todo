@@ -118,7 +118,7 @@ type CreateUserPayload {
   clientMutationId: String
 
   """Reads a single `Human` that is related to this `User`."""
-  humanByHuamnId: Human
+  humanByHumanId: Human
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -263,7 +263,7 @@ type DeleteUserPayload {
   deletedUserId: ID
 
   """Reads a single `Human` that is related to this `User`."""
-  humanByHuamnId: Human
+  humanByHumanId: Human
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -321,7 +321,7 @@ type Human implements Node {
   username: String
 
   """Reads and enables pagination through a set of `User`."""
-  usersByHuamnId(
+  usersByHumanId(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
 
@@ -506,6 +506,12 @@ type Mutation {
     """
     input: DeleteUserByEmailInput!
   ): DeleteUserPayload
+  registerHuman(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: RegisterHumanInput!
+  ): RegisterHumanPayload
 
   """Updates a single `Human` using its globally unique id and a patch."""
   updateHuman(
@@ -791,6 +797,39 @@ type Query implements Node {
   userByEmail(email: String!): User
 }
 
+"""All input for the `registerHuman` mutation."""
+input RegisterHumanInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  email: String!
+  password: String!
+  username: String!
+}
+
+"""The output of our `registerHuman` mutation."""
+type RegisterHumanPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  human: Human
+
+  """An edge for our `Human`. May be used by Relay 1."""
+  humanEdge(
+    """The method to use when ordering `Human`."""
+    orderBy: [HumansOrderBy!] = [PRIMARY_KEY_ASC]
+  ): HumansEdge
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+}
+
 """
 A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122).
 """
@@ -937,7 +976,7 @@ type UpdateUserPayload {
   clientMutationId: String
 
   """Reads a single `Human` that is related to this `User`."""
-  humanByHuamnId: Human
+  humanByHumanId: Human
 
   """
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -956,10 +995,10 @@ type UpdateUserPayload {
 
 type User {
   email: String!
-  huamnId: UUID!
 
   """Reads a single `Human` that is related to this `User`."""
-  humanByHuamnId: Human
+  humanByHumanId: Human
+  humanId: UUID!
   passwordHash: String!
 }
 
@@ -970,8 +1009,8 @@ input UserCondition {
   """Checks for equality with the object’s `email` field."""
   email: String
 
-  """Checks for equality with the object’s `huamnId` field."""
-  huamnId: UUID
+  """Checks for equality with the object’s `humanId` field."""
+  humanId: UUID
 
   """Checks for equality with the object’s `passwordHash` field."""
   passwordHash: String
@@ -980,14 +1019,14 @@ input UserCondition {
 """An input for mutations affecting `User`"""
 input UserInput {
   email: String!
-  huamnId: UUID!
+  humanId: UUID!
   passwordHash: String!
 }
 
 """Represents an update to a `User`. Fields that are set will be updated."""
 input UserPatch {
   email: String
-  huamnId: UUID
+  humanId: UUID
   passwordHash: String
 }
 
@@ -1021,8 +1060,8 @@ type UsersEdge {
 enum UsersOrderBy {
   EMAIL_ASC
   EMAIL_DESC
-  HUAMN_ID_ASC
-  HUAMN_ID_DESC
+  HUMAN_ID_ASC
+  HUMAN_ID_DESC
   NATURAL
   PASSWORD_HASH_ASC
   PASSWORD_HASH_DESC

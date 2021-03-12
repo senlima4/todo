@@ -51,6 +51,7 @@ create table app_private.user (
   email             text not null unique check (email ~* '^.+@.+\..+$'),
   password_hash     text not null
 );
+alter table app_private.user enable row level security;
 
 create role postgraphile_human login password 'xyz';
 
@@ -60,18 +61,36 @@ grant anonymous_human to postgraphile_human;
 create role the_human;
 grant the_human to postgraphile_human;
 
-create type app_private.jwt_token as (
+create type app_public.jwt_token as (
   role        text,
-  human_id    integer,
+  human_id    uuid,
   exp         bigint
 );
 
 
+create function app_public.register_human(
+  username  text,
+  email     text,
+  password  text
+) returns app_public.human as $$
+declare
+  human app_public.human;
+begin
+  insert into app_public.human (username) values
+    (username)
+    returning * into human;
+
+  insert into app_private.user (human_id, email, password_hash) values
+    (human.id, email, crypt(password, gen_salt('bf')));
+
+  return human;
+end;
+$$ language plpgsql strict security definer;
 
 create function app_public.authenticate(
   email    text,
   password text
-) returns app_private.jwt_token as $$
+) returns app_public.jwt_token as $$
 declare
   account app_private.user;
 begin
@@ -80,7 +99,7 @@ begin
   where a.email = $1;
 
   if account.password_hash = crypt(password, account.password_hash) then
-    return ('the_human', account.human_id, extract(epoch from (now() + interval '7 days')))::app_private.jwt_token;
+    return ('the_human', account.human_id, extract(epoch from (now() + interval '7 days')))::app_public.jwt_token;
   else
     return null;
   end if;
@@ -102,6 +121,7 @@ grant update, delete on table app_public.human to the_human;
 
 grant select, insert, update, delete on table app_public.note to the_human;
 
+grant execute on function app_public.register_human(text, text, text) to anonymous_human;
 grant execute on function app_public.authenticate(text, text) to anonymous_human, the_human;
 grant execute on function app_public.current_human() to anonymous_human, the_human;
 
