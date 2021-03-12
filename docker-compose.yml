@@ -3,6 +3,7 @@ version: "3.7"
 services:
   todo_postgres:
     image: postgres:13-alpine
+    container_name: todo_postgres
     ports:
       - "5432:5432"
     environment:

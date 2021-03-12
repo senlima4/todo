@@ -28,3 +28,7 @@ docker-compose just for development
 2. Deploy product web to S3
 3. Deploy server docker image to AWS ECS
 4. Use AWS RDS Postgres for production
+
+### Before you start
+
+You need to change `./db/init.sql` Line 55's `'xyz'` to another random word
