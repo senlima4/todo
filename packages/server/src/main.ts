@@ -11,7 +11,7 @@ const app = express()
 app.use(cors())
 app.use(
   postgraphile(
-    DATABASE_URL || 'postgresql://root:password@localhost:5432/todos',
+    DATABASE_URL || 'postgresql://root:password@todo_postgres:5432/todos',
     ['app_public', 'app_private'],
     {
       allowExplain: true,

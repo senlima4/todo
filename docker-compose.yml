@@ -16,6 +16,23 @@ services:
     networks:
       - default
 
+  todo_server:
+    build:
+      context: packages/server
+      dockerfile: Dockerfile.dev
+    container_name: todo_server
+    ports:
+      - "8000:8000"
+    depends_on:
+      - todo_postgres
+    environment:
+      DATABASE_URL: postgresql://root:password@todo_postgres:5432/todos
+      SECRET_KEY: some_secret_key_that_you_need_to_change
+    volumes:
+      - ./packages/server/src:/app/src
+    networks:
+      - default
+
 volumes:
   todo-postgres-data:
 

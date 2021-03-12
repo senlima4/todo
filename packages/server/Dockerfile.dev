@@ -2,7 +2,9 @@ FROM node:lts-alpine
 
 ENV NODE_ENV=development
 
-COPY package.json ./
+COPY package.json /app/package.json
+
+WORKDIR /app
 
 RUN yarn install
 
