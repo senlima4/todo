@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { loadQuery, RelayEnvironmentProvider } from 'react-relay/hooks'
 
-import relayEnv from 'utils/relayEnv'
-import AppQueryNode from '__generated__/AppQuery.graphql'
+import relayEnv from './utils/relayEnv'
+import AppQueryNode from './__generated__/AppQuery.graphql'
 
 import App from './App'
 import reportWebVitals from './reportWebVitals'

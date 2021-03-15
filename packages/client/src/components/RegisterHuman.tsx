@@ -12,12 +12,12 @@ import { useMutation } from 'react-relay/hooks'
 import type {
   RegisterHumanInput,
   RegisterHumanMutation,
-} from '__generated__/RegisterHumanMutation.graphql'
+} from '@/__generated__/RegisterHumanMutation.graphql'
 
 import RegisterForm from './RegisterForm'
 
-const RegisterHuman = () => {
-  const { isOpen, onClose } = useDisclosure()
+export default function RegisterHuman() {
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
   const [commit, isInFlight] = useMutation<RegisterHumanMutation>(graphql`
     mutation RegisterHumanMutation($input: RegisterHumanInput!) {
       registerHuman(input: $input) {
@@ -46,8 +46,8 @@ const RegisterHuman = () => {
       closeOnOverlayClick={false}
     >
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Create Admin</ModalHeader>
+      <ModalContent py={4}>
+        <ModalHeader textAlign="center">Create Admin</ModalHeader>
 
         <ModalBody>
           <RegisterForm isInFlight={isInFlight} submitFunc={register} />
@@ -56,5 +56,3 @@ const RegisterHuman = () => {
     </Modal>
   )
 }
-
-export default RegisterHuman

@@ -6,9 +6,9 @@ import {
 } from '@chakra-ui/react'
 import { FiSun, FiMoon } from 'react-icons/fi'
 
-const ColorButton = ({
+export default function ColorButton({
   ...otherProps
-}: Partial<IconButtonProps>): JSX.Element => {
+}: Partial<IconButtonProps>) {
   const { toggleColorMode } = useColorMode()
   const icon = useColorModeValue(<FiMoon />, <FiSun />)
   const label = useColorModeValue(
@@ -26,5 +26,3 @@ const ColorButton = ({
     />
   )
 }
-
-export default ColorButton
