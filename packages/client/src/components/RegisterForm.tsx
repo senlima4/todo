@@ -1,0 +1,89 @@
+import {
+  Flex,
+  Input,
+  Button,
+  FormLabel,
+  FormControl,
+  FormErrorMessage,
+} from '@chakra-ui/react'
+import { useForm } from 'react-hook-form'
+
+import { RegisterHumanInput } from '__generated__/RegisterHumanMutation.graphql'
+
+type PropsType = {
+  isInFlight: boolean
+  submitFunc: (data: RegisterHumanInput) => void
+}
+
+const RegisterForm = ({ isInFlight, submitFunc }: PropsType) => {
+  const { register, errors, handleSubmit } = useForm({
+    defaultValues: { username: '', email: '', password: '' },
+  })
+
+  const onSubmit = (data: RegisterHumanInput) => {
+    submitFunc(data)
+  }
+
+  return (
+    <Flex
+      as="form"
+      align="center"
+      flexDir="column"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <FormControl mb={4} isInvalid={Boolean(errors.username)}>
+        <FormLabel htmlFor="username">Username</FormLabel>
+        <Input
+          ref={register({
+            required: 'Required field',
+            minLength: { value: 5, message: 'At least 5 characters' },
+          })}
+          type="text"
+          name="username"
+        />
+        {errors.username && (
+          <FormErrorMessage>{errors.username.message}</FormErrorMessage>
+        )}
+      </FormControl>
+
+      <FormControl mb={4} isInvalid={Boolean(errors.email)}>
+        <FormLabel htmlFor="email">Email</FormLabel>
+        <Input
+          ref={register({
+            required: 'Required field',
+            pattern: {
+              value: /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+              message: 'Invaild email address',
+            },
+          })}
+          type="email"
+          name="email"
+        />
+        {errors.email && (
+          <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+        )}
+      </FormControl>
+
+      <FormControl mb={8} isInvalid={Boolean(errors.password)}>
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <Input
+          ref={register({
+            required: 'Required field',
+            minLength: { value: 8, message: 'At least 8 characters' },
+          })}
+          type="password"
+          name="password"
+        />
+        {errors.password && (
+          <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+        )}
+      </FormControl>
+
+      <Button type="submit" isLoading={isInFlight}>
+        Init User
+      </Button>
+    </Flex>
+  )
+}
+
+export default RegisterForm

@@ -21,7 +21,10 @@
   "plugins": ["@typescript-eslint", "react-hooks"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "import/prefer-default-export": "off"
+    "react/jsx-props-no-spreading": "off",
+    "import/no-named-as-default": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   },
   "settings": {
     "react": {
