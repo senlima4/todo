@@ -9,26 +9,21 @@ import {
 import { graphql } from 'babel-plugin-relay/macro'
 import { useMutation } from 'react-relay/hooks'
 
-import type {
-  RegisterHumanInput,
-  RegisterHumanMutation,
-} from '@/__generated__/RegisterHumanMutation.graphql'
+import type { AuthenticateInput } from '@/__generated__/LoginMutation.graphql'
 
-import RegisterForm from './RegisterForm'
+import LoginForm from './LoginForm'
 
-export default function RegisterHuman() {
+export default function Login() {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
-  const [commit, isInFlight] = useMutation<RegisterHumanMutation>(graphql`
-    mutation RegisterHumanMutation($input: RegisterHumanInput!) {
-      registerHuman(input: $input) {
-        human {
-          username
-        }
+  const [commit, isInFlight] = useMutation(graphql`
+    mutation LoginMutation($input: AuthenticateInput!) {
+      authenticate(input: $input) {
+        jwtToken
       }
     }
   `)
 
-  const register = (input: RegisterHumanInput) => {
+  const login = (input: AuthenticateInput) => {
     commit({
       variables: { input },
       onCompleted: () => {
@@ -47,10 +42,10 @@ export default function RegisterHuman() {
     >
       <ModalOverlay />
       <ModalContent py={4}>
-        <ModalHeader textAlign="center">Create Admin</ModalHeader>
+        <ModalHeader textAlign="center">👋 Welcome</ModalHeader>
 
         <ModalBody>
-          <RegisterForm isInFlight={isInFlight} submitFunc={register} />
+          <LoginForm isInFlight={isInFlight} submitFunc={login} />
         </ModalBody>
       </ModalContent>
     </Modal>

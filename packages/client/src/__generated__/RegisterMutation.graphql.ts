@@ -9,25 +9,25 @@ export type RegisterHumanInput = {
     password: string;
     username: string;
 };
-export type RegisterHumanMutationVariables = {
+export type RegisterMutationVariables = {
     input: RegisterHumanInput;
 };
-export type RegisterHumanMutationResponse = {
+export type RegisterMutationResponse = {
     readonly registerHuman: {
         readonly human: {
             readonly username: string | null;
         } | null;
     } | null;
 };
-export type RegisterHumanMutation = {
-    readonly response: RegisterHumanMutationResponse;
-    readonly variables: RegisterHumanMutationVariables;
+export type RegisterMutation = {
+    readonly response: RegisterMutationResponse;
+    readonly variables: RegisterMutationVariables;
 };
 
 
 
 /*
-mutation RegisterHumanMutation(
+mutation RegisterMutation(
   $input: RegisterHumanInput!
 ) {
   registerHuman(input: $input) {
@@ -88,7 +88,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "RegisterHumanMutation",
+    "name": "RegisterMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -97,18 +97,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "RegisterHumanMutation",
+    "name": "RegisterMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "93e88e3e5ee8dbe4b55cc80d1e018913",
+    "cacheID": "a74061b359c9172bf3db14930a8e5996",
     "id": null,
     "metadata": {},
-    "name": "RegisterHumanMutation",
+    "name": "RegisterMutation",
     "operationKind": "mutation",
-    "text": "mutation RegisterHumanMutation(\n  $input: RegisterHumanInput!\n) {\n  registerHuman(input: $input) {\n    human {\n      username\n    }\n  }\n}\n"
+    "text": "mutation RegisterMutation(\n  $input: RegisterHumanInput!\n) {\n  registerHuman(input: $input) {\n    human {\n      username\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'fe78c4ed03c95ddf5c51402598ebd790';
+(node as any).hash = 'dc17cf9722f37ca72fd13d6bec4f3bd8';
 export default node;

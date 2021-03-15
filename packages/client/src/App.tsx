@@ -4,7 +4,8 @@ import { usePreloadedQuery, PreloadedQuery } from 'react-relay/hooks'
 
 import type { AppQuery as AppQueryType } from '@/__generated__/AppQuery.graphql'
 
-import RegisterHuman from '@/components/RegisterHuman'
+import Login from '@/components/Login'
+import Register from '@/components/Register'
 
 type PropsType = {
   queryRef: PreloadedQuery<AppQueryType>
@@ -29,7 +30,11 @@ export default function App({ queryRef }: PropsType) {
 
   return (
     <Box>
-      {data.allHumans?.nodes.length === 0 && <RegisterHuman />}
+      {data.allHumans?.nodes.length === 0 ? (
+        <Register />
+      ) : (
+        !data.currentHuman?.id && <Login />
+      )}
 
       <Text>{JSON.stringify(data)}</Text>
     </Box>
