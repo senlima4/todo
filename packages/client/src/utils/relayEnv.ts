@@ -6,20 +6,22 @@ import {
   FetchFunction,
 } from 'relay-runtime'
 
-type FetcherHeaderType = Record<string, string>
+const source = new RecordSource()
+const store = new Store(source)
 
 const relayFetcher: FetchFunction = async (params, variables) => {
-  const token = localStorage.getItem('todo_access')
-
-  const headers: FetcherHeaderType = {
-    'Content-Type': 'application/json',
-  }
-
-  if (token) headers.Authorization = `Bearer ${token}`
+  const token = localStorage.getItem('todo-access')
+  if (token === 'null') localStorage.removeItem('todo-access')
 
   const response = await fetch('http://localhost:8000/graphql', {
     method: 'POST',
-    headers,
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token && {
+        Authorization: `Bearer ${token}`,
+      }),
+    },
     body: JSON.stringify({
       query: params.text,
       variables,
@@ -42,6 +44,6 @@ const relayFetcher: FetchFunction = async (params, variables) => {
 }
 
 export default new Environment({
+  store,
   network: Network.create(relayFetcher),
-  store: new Store(new RecordSource()),
 })

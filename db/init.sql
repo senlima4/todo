@@ -74,16 +74,25 @@ create function app_public.register_human(
   password  text
 ) returns app_public.human as $$
 declare
-  human app_public.human;
+  human         app_public.human;
+  human_count   integer;
 begin
-  insert into app_public.human (username) values
-    (username)
-    returning * into human;
+  select count(*)
+  into human_count
+  from app_public.human;
 
-  insert into app_private.user (human_id, email, password_hash) values
-    (human.id, email, crypt(password, gen_salt('bf')));
+  if human_count = 0 then
+    insert into app_public.human (username) values
+      (username)
+      returning * into human;
+    
+    insert into app_private.user (human_id, email, password_hash) values
+      (human.id, email, crypt(password, gen_salt('bf')));
 
-  return human;
+    return human;
+  else
+    raise exception 'Register is forbidden' using errcode='RIFTKN';
+  end if;  
 end;
 $$ language plpgsql strict security definer;
 

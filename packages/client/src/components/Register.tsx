@@ -1,20 +1,26 @@
-import {
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalContent,
-  ModalOverlay,
-  useDisclosure,
-} from '@chakra-ui/react'
 import { graphql } from 'babel-plugin-relay/macro'
 import { useMutation } from 'react-relay/hooks'
+import { useForm } from 'react-hook-form'
+import {
+  Flex,
+  Input,
+  Button,
+  FormLabel,
+  FormControl,
+  FormErrorMessage,
+} from '@chakra-ui/react'
 
-import type { RegisterHumanInput } from '@/__generated__/RegisterMutation.graphql'
+import { RegisterHumanInput } from '@/__generated__/RegisterMutation.graphql'
 
-import RegisterForm from './RegisterForm'
+type PropsType = {
+  toLogin: () => void
+  onRegistered: () => void
+}
 
-export default function Register() {
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
+export default function Register({ toLogin, onRegistered }: PropsType) {
+  const { register, errors, handleSubmit } = useForm({
+    defaultValues: { username: '', email: '', password: '' },
+  })
   const [commit, isInFlight] = useMutation(graphql`
     mutation RegisterMutation($input: RegisterHumanInput!) {
       registerHuman(input: $input) {
@@ -25,31 +31,74 @@ export default function Register() {
     }
   `)
 
-  const register = (input: RegisterHumanInput) => {
+  const onSubmit = (input: RegisterHumanInput) => {
     commit({
       variables: { input },
       onCompleted: () => {
-        onClose()
+        onRegistered()
       },
     })
   }
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      isCentered
-      closeOnEsc={false}
-      closeOnOverlayClick={false}
+    <Flex
+      as="form"
+      align="center"
+      flexDir="column"
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <ModalOverlay />
-      <ModalContent py={4}>
-        <ModalHeader textAlign="center">Create Admin</ModalHeader>
+      <FormControl mb={4} isInvalid={Boolean(errors.username)}>
+        <FormLabel htmlFor="username">Username</FormLabel>
+        <Input
+          ref={register({
+            required: 'Required field',
+            minLength: { value: 5, message: 'At least 5 characters' },
+          })}
+          size="sm"
+          type="text"
+          name="username"
+        />
+        <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
+      </FormControl>
 
-        <ModalBody>
-          <RegisterForm isInFlight={isInFlight} submitFunc={register} />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+      <FormControl mb={4} isInvalid={Boolean(errors.email)}>
+        <FormLabel htmlFor="email">Email</FormLabel>
+        <Input
+          ref={register({
+            required: 'Required field',
+            pattern: {
+              value: /^[a-zA-Z0-9.!#$%&'*+=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+              message: 'Invaild email address',
+            },
+          })}
+          size="sm"
+          type="email"
+          name="email"
+        />
+        <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+      </FormControl>
+
+      <FormControl mb={8} isInvalid={Boolean(errors.password)}>
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <Input
+          ref={register({
+            required: 'Required field',
+            minLength: { value: 8, message: 'At least 8 characters' },
+          })}
+          size="sm"
+          type="password"
+          name="password"
+        />
+        <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+      </FormControl>
+
+      <Button mb={4} type="submit" isLoading={isInFlight}>
+        Confirm
+      </Button>
+
+      <Button variant="link" onClick={toLogin}>
+        Already registered?
+      </Button>
+    </Flex>
   )
 }

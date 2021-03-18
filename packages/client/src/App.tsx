@@ -1,42 +1,41 @@
-import { Box, Text } from '@chakra-ui/react'
-import { graphql } from 'babel-plugin-relay/macro'
-import { usePreloadedQuery, PreloadedQuery } from 'react-relay/hooks'
+import { useEffect, useCallback, Suspense } from 'react'
+import { Box, Text, Flex } from '@chakra-ui/react'
+import { useQueryLoader } from 'react-relay/hooks'
 
-import type { AppQuery as AppQueryType } from '@/__generated__/AppQuery.graphql'
+import AuthNode, { AuthQuery } from '@/__generated__/AuthQuery.graphql'
 
-import Login from '@/components/Login'
-import Register from '@/components/Register'
+import Auth from '@/components/Auth'
+import DashboardSkeleton from '@/components/DashboardSkeleton'
 
-type PropsType = {
-  queryRef: PreloadedQuery<AppQueryType>
-}
+export default function App() {
+  const [queryRef, loadQuery] = useQueryLoader<AuthQuery>(AuthNode)
 
-export default function App({ queryRef }: PropsType) {
-  const data = usePreloadedQuery(
-    graphql`
-      query AppQuery {
-        currentHuman {
-          id
-        }
-        allHumans {
-          nodes {
-            username
-          }
-        }
-      }
-    `,
-    queryRef
-  )
+  useEffect(() => {
+    loadQuery({}, { fetchPolicy: 'network-only' })
+  }, [])
+
+  const refresh = useCallback(() => {
+    loadQuery({}, { fetchPolicy: 'network-only' })
+  }, [])
 
   return (
     <Box>
-      {data.allHumans?.nodes.length === 0 ? (
-        <Register />
-      ) : (
-        !data.currentHuman?.id && <Login />
+      {queryRef && (
+        <Suspense fallback={<DashboardSkeleton />}>
+          <Auth refresh={refresh} queryRef={queryRef}>
+            <Flex w="full" h="100vh">
+              <Box flex="none" w="275px">
+                <Text>Notes</Text>
+              </Box>
+              <Box flex="auto" w="full" px={8} py={12}>
+                <Box mx="auto" w="90%" maxW="968px" h="full">
+                  <Text>Content</Text>
+                </Box>
+              </Box>
+            </Flex>
+          </Auth>
+        </Suspense>
       )}
-
-      <Text>{JSON.stringify(data)}</Text>
     </Box>
   )
 }

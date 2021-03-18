@@ -3,8 +3,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type AppQueryVariables = {};
-export type AppQueryResponse = {
+export type AuthQueryVariables = {};
+export type AuthQueryResponse = {
     readonly currentHuman: {
         readonly id: unknown;
     } | null;
@@ -14,15 +14,15 @@ export type AppQueryResponse = {
         }>;
     } | null;
 };
-export type AppQuery = {
-    readonly response: AppQueryResponse;
-    readonly variables: AppQueryVariables;
+export type AuthQuery = {
+    readonly response: AuthQueryResponse;
+    readonly variables: AuthQueryVariables;
 };
 
 
 
 /*
-query AppQuery {
+query AuthQuery {
   currentHuman {
     id
   }
@@ -89,7 +89,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "AppQuery",
+    "name": "AuthQuery",
     "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -98,18 +98,18 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "AppQuery",
+    "name": "AuthQuery",
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "557d61648a7f1b6c36fb09e7b1b2dabe",
+    "cacheID": "c023438a6032faca6c7f0a6f30f6fdfd",
     "id": null,
     "metadata": {},
-    "name": "AppQuery",
+    "name": "AuthQuery",
     "operationKind": "query",
-    "text": "query AppQuery {\n  currentHuman {\n    id\n  }\n  allHumans {\n    nodes {\n      username\n    }\n  }\n}\n"
+    "text": "query AuthQuery {\n  currentHuman {\n    id\n  }\n  allHumans {\n    nodes {\n      username\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b5d5733b5714ed078982794e7260ed49';
+(node as any).hash = '8c0c274650be8670917d614927988712';
 export default node;

@@ -3341,7 +3341,7 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*":
+"@types/lodash@*", "@types/lodash@^4.14.168":
   version "4.14.168"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.168.tgz#fe24632e79b7ade3f132891afff86caa5e5ce008"
   integrity sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==
@@ -5678,7 +5678,7 @@ core-js@^2.4.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
-core-js@^3.6.5:
+core-js@^3.0.0, core-js@^3.6.5:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.9.1.tgz#cec8de593db8eb2a85ffb0dbdeb312cb6e5460ae"
   integrity sha512-gSjRvzkxQc1zjM/5paAmL4idJBFzuJoo+jDjF1tStYFMV2ERfD02HhahhCGXUyHxQRG4yFKVSdO6g62eoRMcDg==
@@ -7305,6 +7305,11 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+extract-files@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-9.0.0.tgz#8a7744f2437f81f5ed3250ed9f1550de902fe54a"
+  integrity sha512-CvdFfHkC95B4bBBk36hcEmvdR2awOdhhVUYH6S/zrVj3477zven/fJMYg7121h4T1xHZC+tetUpubpAhxwI7hQ==
+
 extsprintf@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
@@ -7588,10 +7593,10 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-framer-motion@^3.10.3:
-  version "3.10.3"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-3.10.3.tgz#a5478a449e0511bf397cf44f84ea771d79c531f9"
-  integrity sha512-tHh5MzqSplBZ+j3Z+lZ78e4olckA8E5zJrexSpjUcaxtIFLgpUD227R+qksZw+cP3nvoT22NrlkXG3OUEJOWWw==
+framer-motion@3.10.5:
+  version "3.10.5"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-3.10.5.tgz#5495a0b54ee63b8ec3e5ba9d84a347138d404687"
+  integrity sha512-LybyZEt+HsBhyalSAih5t8tOqjVb6BrkdfPF/XQDxzcMnrDooeghp2WiACZdhQ3RzlS/zyAqSR326oETPT1WxQ==
   dependencies:
     framesync "5.2.0"
     hey-listen "^1.0.8"
@@ -13064,6 +13069,14 @@ react-refresh@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==
+
+react-relay-network-modern@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-6.0.0.tgz#faa2b6499f3f1d9fdac5af9851b7a851fc36c67b"
+  integrity sha512-Glg9iGK9pV+KXC9Oa3X7H2cjd/6Kg4v6fMBkjMdoQRgV/ct5tAtbOs0xB5k1PHJs6cK+mmidTgVhT8VEfa2NFA==
+  dependencies:
+    core-js "^3.0.0"
+    extract-files "^9.0.0"
 
 react-relay@^11.0.0:
   version "11.0.0"
