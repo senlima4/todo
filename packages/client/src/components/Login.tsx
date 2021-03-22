@@ -1,6 +1,3 @@
-import { graphql } from 'babel-plugin-relay/macro'
-import { useMutation } from 'react-relay/hooks'
-import { useForm } from 'react-hook-form'
 import {
   Flex,
   Input,
@@ -9,6 +6,9 @@ import {
   FormControl,
   FormErrorMessage,
 } from '@chakra-ui/react'
+import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-relay/hooks'
+import { graphql } from 'babel-plugin-relay/macro'
 
 import {
   LoginMutation,
@@ -16,11 +16,10 @@ import {
 } from '@/__generated__/LoginMutation.graphql'
 
 type PropsType = {
-  toRegister: () => void
   onClose: () => void
 }
 
-export default function Login({ toRegister, onClose }: PropsType) {
+export default function Login({ onClose }: PropsType) {
   const { register, errors, handleSubmit } = useForm({
     defaultValues: { email: '', password: '' },
   })
@@ -87,10 +86,6 @@ export default function Login({ toRegister, onClose }: PropsType) {
 
       <Button mb={4} type="submit" isLoading={isInFlight}>
         Login
-      </Button>
-
-      <Button variant="link" onClick={toRegister}>
-        Setup user?
       </Button>
     </Flex>
   )

@@ -1,18 +1,12 @@
 import React from 'react'
 
-type FComponentProps = {
-  error: Error
-}
-
 type PropsType = {
   children: React.ReactNode
-  fallback: React.FC<FComponentProps>
 }
 
 type StatesType = {
-  error: Error | null
+  error: Record<string, string> | null
 }
-
 export default class ErrorBoundary extends React.Component<
   PropsType,
   StatesType
@@ -22,15 +16,25 @@ export default class ErrorBoundary extends React.Component<
     this.state = { error: null }
   }
 
-  componentDidCatch(error: Error | null) {
-    this.setState({ error })
+  static getDerivedStateFromError(error: Error) {
+    return { error }
   }
 
   render() {
-    const { children, fallback } = this.props
+    const { children } = this.props
     const { error } = this.state
 
-    if (error) return fallback({ error })
+    if (error != null) {
+      return (
+        <div>
+          <div>Error: {error.message}</div>
+          <div>
+            <pre>{JSON.stringify(error.source, null, 2)}</pre>
+          </div>
+        </div>
+      )
+    }
+
     return children
   }
 }

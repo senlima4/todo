@@ -3,39 +3,53 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type AuthQueryVariables = {};
-export type AuthQueryResponse = {
+export type EntryPointQueryVariables = {};
+export type EntryPointQueryResponse = {
+    readonly allHumans: {
+        readonly totalCount: number;
+    } | null;
     readonly currentHuman: {
         readonly id: unknown;
     } | null;
-    readonly allHumans: {
-        readonly nodes: ReadonlyArray<{
-            readonly username: string | null;
-        }>;
-    } | null;
 };
-export type AuthQuery = {
-    readonly response: AuthQueryResponse;
-    readonly variables: AuthQueryVariables;
+export type EntryPointQuery = {
+    readonly response: EntryPointQueryResponse;
+    readonly variables: EntryPointQueryVariables;
 };
 
 
 
 /*
-query AuthQuery {
+query EntryPointQuery {
+  allHumans {
+    totalCount
+  }
   currentHuman {
     id
-  }
-  allHumans {
-    nodes {
-      username
-    }
   }
 }
 */
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "HumansConnection",
+    "kind": "LinkedField",
+    "name": "allHumans",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "totalCount",
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  },
   {
     "alias": null,
     "args": null,
@@ -53,35 +67,6 @@ var v0 = [
       }
     ],
     "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "HumansConnection",
-    "kind": "LinkedField",
-    "name": "allHumans",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Human",
-        "kind": "LinkedField",
-        "name": "nodes",
-        "plural": true,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "username",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
   }
 ];
 return {
@@ -89,7 +74,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "AuthQuery",
+    "name": "EntryPointQuery",
     "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -98,18 +83,18 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "AuthQuery",
+    "name": "EntryPointQuery",
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "c023438a6032faca6c7f0a6f30f6fdfd",
+    "cacheID": "b3c147e3e48de64e4758cbaab7ad70f4",
     "id": null,
     "metadata": {},
-    "name": "AuthQuery",
+    "name": "EntryPointQuery",
     "operationKind": "query",
-    "text": "query AuthQuery {\n  currentHuman {\n    id\n  }\n  allHumans {\n    nodes {\n      username\n    }\n  }\n}\n"
+    "text": "query EntryPointQuery {\n  allHumans {\n    totalCount\n  }\n  currentHuman {\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8c0c274650be8670917d614927988712';
+(node as any).hash = '8941f30e9b81c21412a0c1c9f08737ae';
 export default node;
