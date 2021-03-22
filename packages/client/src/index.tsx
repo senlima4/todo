@@ -1,12 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import { RelayEnvironmentProvider } from 'react-relay/hooks'
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 
 import relayEnv from './utils/relayEnv'
 
+import './css/extra.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+
+const rootNode = document.getElementById('root')
 
 ReactDOM.render(
   <>
@@ -17,7 +20,7 @@ ReactDOM.render(
       </RelayEnvironmentProvider>
     </ChakraProvider>
   </>,
-  document.getElementById('root')
+  rootNode
 )
 
 reportWebVitals()
