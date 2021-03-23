@@ -6,13 +6,14 @@ import { DashboardQuery } from '@/__generated__/DashboardQuery.graphql'
 
 import AddNote from './AddNote'
 import NotesList from './NotesList'
+import NoteEditor from './NoteEditor'
 
 type PropsType = {
   humanId: string
 }
 
 export default function Dashboard({ humanId }: PropsType) {
-  const headerBg = useColorModeValue('gray.100', 'gray.700')
+  const headerBg = useColorModeValue('gray.100', 'gray.800')
   const data = useLazyLoadQuery<DashboardQuery>(
     graphql`
       query DashboardQuery {
@@ -29,15 +30,14 @@ export default function Dashboard({ humanId }: PropsType) {
         <Flex w="275px" flex="none" flexDir="column">
           <Box
             w="full"
-            h="50px"
+            h={12}
             flex="none"
-            px={4}
             top="0"
             pos="sticky"
             bg={headerBg}
-            borderBottomRadius="xl"
+            borderBottomRadius="lg"
           >
-            <Flex w="full" h="50px" align="center">
+            <Flex px={4} w="full" h={12} align="center">
               <Text fontWeight="bold">todo</Text>
               <Spacer />
               <AddNote humanId={humanId} />
@@ -54,7 +54,7 @@ export default function Dashboard({ humanId }: PropsType) {
         </Flex>
 
         <Box flex="auto" w="100%" pt={12}>
-          <Text>test</Text>
+          <NoteEditor />
         </Box>
       </Flex>
     </Box>

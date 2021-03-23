@@ -53,7 +53,7 @@ export default function NotesList({ query }: PropsType) {
   }
 
   return (
-    <Flex px={4} w="full" flexDir="column">
+    <Flex w="full" h="full" flexDir="column" bgColor="gray.900">
       <InfiniteScroll
         dataLength={data.allNotes?.totalCount || 0}
         next={loadMore}

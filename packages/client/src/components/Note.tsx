@@ -2,7 +2,9 @@ import { graphql } from 'babel-plugin-relay/macro'
 import { useFragment } from 'react-relay/hooks'
 import { Box, Text } from '@chakra-ui/react'
 import { format } from 'date-fns'
+import { useAtom } from 'jotai'
 
+import { noteAtom } from '@/utils/atom'
 import { Note_note$key } from '@/__generated__/Note_note.graphql'
 
 type PropsType = {
@@ -10,6 +12,7 @@ type PropsType = {
 }
 
 export default function Note({ note }: PropsType) {
+  const [currentNote, setNote] = useAtom(noteAtom)
   const data = useFragment(
     graphql`
       fragment Note_note on Note {
@@ -22,8 +25,23 @@ export default function Note({ note }: PropsType) {
     note
   )
 
+  const onSelect = () => {
+    setNote({
+      ...currentNote,
+      id: data.id as string,
+      content: data.content as string,
+      createdAt: data.createdAt as string,
+      updatedAt: data.updatedAt as string,
+    })
+  }
+
   return (
-    <Box px={2} py={3}>
+    <Box
+      px={4}
+      py={3}
+      onClick={onSelect}
+      bgColor={data.id === currentNote.id ? 'blue.500' : 'black'}
+    >
       <Text mb={2} noOfLines={2}>
         {data.content}
       </Text>
