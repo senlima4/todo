@@ -28,6 +28,7 @@ query NotesListPaginationQuery(
 
 fragment Note_note on Note {
   id
+  nodeId
   content
   createdAt
   updatedAt
@@ -182,6 +183,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "nodeId",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "content",
                     "storageKey": null
                   },
@@ -234,12 +242,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2a3eb833b496061c17eedd62696767fe",
+    "cacheID": "4e40ec7913b47945c25cf3a8b9401b98",
     "id": null,
     "metadata": {},
     "name": "NotesListPaginationQuery",
     "operationKind": "query",
-    "text": "query NotesListPaginationQuery(\n  $after: Cursor\n  $first: Int = 10\n) {\n  ...NotesList_query_2HEEH6\n}\n\nfragment Note_note on Note {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment NotesList_query_2HEEH6 on Query {\n  allNotes(first: $first, after: $after) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query NotesListPaginationQuery(\n  $after: Cursor\n  $first: Int = 10\n) {\n  ...NotesList_query_2HEEH6\n}\n\nfragment Note_note on Note {\n  id\n  nodeId\n  content\n  createdAt\n  updatedAt\n}\n\nfragment NotesList_query_2HEEH6 on Query {\n  allNotes(first: $first, after: $after) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();

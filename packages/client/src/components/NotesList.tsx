@@ -59,7 +59,9 @@ export default function NotesList({ query }: PropsType) {
         next={loadMore}
         hasMore={hasNext}
         loader={<h4>Loading...</h4>}
-        refreshFunction={() => refetch({})}
+        refreshFunction={() =>
+          refetch({}, { fetchPolicy: 'store-and-network' })
+        }
         pullDownToRefresh
         pullDownToRefreshThreshold={50}
         pullDownToRefreshContent={

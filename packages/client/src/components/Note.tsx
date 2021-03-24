@@ -17,6 +17,7 @@ export default function Note({ note }: PropsType) {
     graphql`
       fragment Note_note on Note {
         id
+        nodeId
         content
         createdAt
         updatedAt
@@ -29,6 +30,7 @@ export default function Note({ note }: PropsType) {
     setNote({
       ...currentNote,
       id: data.id as string,
+      nodeId: data.nodeId as string,
       content: data.content as string,
       createdAt: data.createdAt as string,
       updatedAt: data.updatedAt as string,
@@ -42,10 +44,10 @@ export default function Note({ note }: PropsType) {
       onClick={onSelect}
       bgColor={data.id === currentNote.id ? 'blue.500' : 'black'}
     >
-      <Text mb={2} noOfLines={2}>
+      <Text mb={2} fontSize="sm" noOfLines={2} color="gray.100">
         {data.content}
       </Text>
-      <Text fontSize="xs">
+      <Text fontSize="10px" color="gray.300">
         latest updated at{' '}
         {format(new Date(data.updatedAt as string), 'yyyy-MM-dd hh:mm')}
       </Text>

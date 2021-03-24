@@ -22,6 +22,7 @@ query DashboardQuery {
 
 fragment Note_note on Note {
   id
+  nodeId
   content
   createdAt
   updatedAt
@@ -159,6 +160,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "nodeId",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "content",
                     "storageKey": null
                   },
@@ -211,12 +219,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "53d56224ebb7e76220876c35fe6b1185",
+    "cacheID": "95d4bdc08f0ab76f3b80d5d967c1efef",
     "id": null,
     "metadata": {},
     "name": "DashboardQuery",
     "operationKind": "query",
-    "text": "query DashboardQuery {\n  ...NotesList_query\n}\n\nfragment Note_note on Note {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment NotesList_query on Query {\n  allNotes(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query DashboardQuery {\n  ...NotesList_query\n}\n\nfragment Note_note on Note {\n  id\n  nodeId\n  content\n  createdAt\n  updatedAt\n}\n\nfragment NotesList_query on Query {\n  allNotes(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,7 +1,8 @@
 import { useAtom } from 'jotai'
-import { Flex, Center, Text, Textarea } from '@chakra-ui/react'
+import { Text, Flex, Center } from '@chakra-ui/react'
 
 import { noteAtom } from '@/utils/atom'
+import UpdateNoteArea from './UpdateNote'
 
 export default function NoteEditor() {
   const [note] = useAtom(noteAtom)
@@ -16,7 +17,7 @@ export default function NoteEditor() {
 
   return (
     <Flex mx="auto" w="75%" maxW="968px" flexDir="column" align="center">
-      <Textarea defaultValue={note.content} />
+      <UpdateNoteArea />
     </Flex>
   )
 }

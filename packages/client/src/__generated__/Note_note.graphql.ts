@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Note_note = {
     readonly id: unknown;
+    readonly nodeId: string;
     readonly content: string;
     readonly createdAt: unknown | null;
     readonly updatedAt: unknown | null;
@@ -36,6 +37,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "nodeId",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "content",
       "storageKey": null
     },
@@ -57,5 +65,5 @@ const node: ReaderFragment = {
   "type": "Note",
   "abstractKey": null
 };
-(node as any).hash = 'dd5da7d4ea42a6238843a936addeb342';
+(node as any).hash = '1198bd9fc811b9a9312cbbcc5cb832c1';
 export default node;
