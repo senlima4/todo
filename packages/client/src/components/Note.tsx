@@ -1,7 +1,7 @@
 import { graphql } from 'babel-plugin-relay/macro'
 import { useFragment } from 'react-relay/hooks'
 import { Box, Text } from '@chakra-ui/react'
-import { format } from 'date-fns'
+import { add, format } from 'date-fns'
 import { useAtom } from 'jotai'
 
 import { noteAtom } from '@/utils/atom'
@@ -49,7 +49,10 @@ export default function Note({ note }: PropsType) {
       </Text>
       <Text fontSize="10px" color="gray.300">
         latest updated at{' '}
-        {format(new Date(data.updatedAt as string), 'yyyy-MM-dd hh:mm')}
+        {format(
+          add(new Date(data.updatedAt as string), { hours: 8 }),
+          'yyyy-MM-dd kk:mm'
+        )}
       </Text>
     </Box>
   )

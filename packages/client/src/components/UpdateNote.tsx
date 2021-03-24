@@ -10,6 +10,7 @@ import { UpdateNoteMutation } from '@/__generated__/UpdateNoteMutation.graphql'
 export default function UpdateNote() {
   const sender = useRef<number | null>(null)
   const [note, setNote] = useAtom(noteAtom)
+  const [firstLoad, setFirst] = useState(true)
   const [saving, setSaving] = useState(false)
   const [commit] = useMutation<UpdateNoteMutation>(graphql`
     mutation UpdateNoteMutation($input: UpdateNoteInput!) {
@@ -27,34 +28,38 @@ export default function UpdateNote() {
 
   useEffect(() => {
     if (sender.current) clearTimeout(sender.current)
-    setSaving(true)
-    sender.current = window.setTimeout(
-      () =>
-        commit({
-          variables: {
-            input: {
-              nodeId: note.nodeId,
-              notePatch: {
-                id: note.id,
-                content: note.content,
+    if (!firstLoad) {
+      setSaving(true)
+      sender.current = window.setTimeout(
+        () =>
+          commit({
+            variables: {
+              input: {
+                nodeId: note.nodeId,
+                notePatch: {
+                  id: note.id,
+                  content: note.content,
+                },
               },
             },
-          },
-          optimisticResponse: {
-            note: {
-              id: note.id,
-              content: note.content,
+            optimisticResponse: {
+              note: {
+                id: note.id,
+                content: note.content,
+                updatedAt: new Date().toISOString(),
+              },
             },
-          },
-          onCompleted: () => {
-            setSaving(false)
-          },
-        }),
-      1000
-    )
+            onCompleted: () => {
+              setSaving(false)
+            },
+          }),
+        1000
+      )
+    }
   }, [note])
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = e => {
+    if (firstLoad) setFirst(false)
     setNote({
       ...note,
       content: e.target.value,
