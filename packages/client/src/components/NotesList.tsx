@@ -3,7 +3,7 @@ import { usePaginationFragment } from 'react-relay/hooks'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
-import { Flex } from '@chakra-ui/react'
+import { useColorModeValue, Flex } from '@chakra-ui/react'
 
 import { refreshNoteAtom } from '@/utils/atom'
 import { NotesList_query$key } from '@/__generated__/NotesList_query.graphql'
@@ -16,6 +16,7 @@ type PropsType = {
 
 export default function NotesList({ query }: PropsType) {
   const [shouldRefresh] = useAtom(refreshNoteAtom)
+  const listBg = useColorModeValue('gray.50', 'gray.800')
   const {
     data,
     refetch,
@@ -61,7 +62,7 @@ export default function NotesList({ query }: PropsType) {
   }
 
   return (
-    <Flex w="full" h="full" flexDir="column" bgColor="gray.900">
+    <Flex w="full" h="full" flexDir="column" bgColor={listBg}>
       <InfiniteScroll
         dataLength={data.allNotes?.totalCount || 0}
         next={loadMore}

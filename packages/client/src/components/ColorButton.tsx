@@ -18,8 +18,10 @@ export default function ColorButton({
 
   return (
     <IconButton
+      isRound
       size="sm"
       icon={icon}
+      variant="ghost"
       aria-label={label}
       onClick={toggleColorMode}
       {...otherProps}

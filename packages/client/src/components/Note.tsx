@@ -1,7 +1,8 @@
 import { graphql } from 'babel-plugin-relay/macro'
 import { useFragment } from 'react-relay/hooks'
-import { Box, Text } from '@chakra-ui/react'
+import { useColorModeValue, Box, Text } from '@chakra-ui/react'
 import { add, format } from 'date-fns'
+import { useCallback } from 'react'
 import { useAtom } from 'jotai'
 
 import { noteAtom } from '@/utils/atom'
@@ -13,6 +14,8 @@ type PropsType = {
 
 export default function Note({ note }: PropsType) {
   const [currentNote, setNote] = useAtom(noteAtom)
+  const blockBg = useColorModeValue('gray.100', 'gray.900')
+  const textColor = useColorModeValue('gray.600', 'gray.300')
   const data = useFragment(
     graphql`
       fragment Note_note on Note {
@@ -25,6 +28,9 @@ export default function Note({ note }: PropsType) {
     `,
     note
   )
+  const isSelected = useCallback(() => data.id === currentNote.id, [
+    currentNote,
+  ])
 
   const onSelect = () => {
     setNote({
@@ -42,12 +48,13 @@ export default function Note({ note }: PropsType) {
       px={4}
       py={3}
       onClick={onSelect}
-      bgColor={data.id === currentNote.id ? 'blue.500' : 'black'}
+      color={isSelected() ? 'white' : textColor}
+      bgColor={isSelected() ? 'blue.500' : blockBg}
     >
-      <Text mb={2} fontSize="sm" noOfLines={2} color="gray.100">
+      <Text mb={2} fontSize="sm" noOfLines={2}>
         {data.content}
       </Text>
-      <Text fontSize="10px" color="gray.300">
+      <Text fontSize="10px">
         latest updated at{' '}
         {format(
           add(new Date(data.updatedAt as string), { hours: 8 }),

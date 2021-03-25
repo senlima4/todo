@@ -1,10 +1,18 @@
 import { graphql } from 'babel-plugin-relay/macro'
 import { useLazyLoadQuery } from 'react-relay/hooks'
-import { useColorModeValue, Box, Flex, Text, Spacer } from '@chakra-ui/react'
+import {
+  useColorModeValue,
+  Box,
+  Flex,
+  Text,
+  Spacer,
+  HStack,
+} from '@chakra-ui/react'
 
 import { DashboardQuery } from '@/__generated__/DashboardQuery.graphql'
 
 import AddNote from './AddNote'
+import ColorButton from './ColorButton'
 import NotesList from './NotesList'
 import NoteEditor from './NoteEditor'
 
@@ -13,7 +21,7 @@ type PropsType = {
 }
 
 export default function Dashboard({ humanId }: PropsType) {
-  const headerBg = useColorModeValue('gray.100', 'gray.800')
+  const dashboardBg = useColorModeValue('white', 'black')
   const data = useLazyLoadQuery<DashboardQuery>(
     graphql`
       query DashboardQuery {
@@ -25,7 +33,7 @@ export default function Dashboard({ humanId }: PropsType) {
   )
 
   return (
-    <Box bg="black">
+    <Box bg={dashboardBg}>
       <Flex w="full" h="100vh">
         <Flex w="275px" flex="none" flexDir="column">
           <Box
@@ -34,13 +42,15 @@ export default function Dashboard({ humanId }: PropsType) {
             flex="none"
             top="0"
             pos="sticky"
-            bg={headerBg}
-            borderBottomRadius="lg"
+            bg={dashboardBg}
           >
             <Flex px={4} w="full" h={12} align="center">
               <Text fontWeight="bold">todo</Text>
               <Spacer />
-              <AddNote humanId={humanId} />
+              <HStack spacing={2} align="center">
+                <ColorButton />
+                <AddNote humanId={humanId} />
+              </HStack>
             </Flex>
           </Box>
           <Box
