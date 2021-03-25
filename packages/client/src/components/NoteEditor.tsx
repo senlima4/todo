@@ -2,6 +2,7 @@ import { useAtom } from 'jotai'
 import { Text, Flex, Center } from '@chakra-ui/react'
 
 import { noteAtom } from '@/utils/atom'
+import DeleteNoteBtn from './DeleteNote'
 import UpdateNoteArea from './UpdateNote'
 
 export default function NoteEditor() {
@@ -17,6 +18,11 @@ export default function NoteEditor() {
 
   return (
     <Flex mx="auto" w="75%" maxW="968px" flexDir="column" align="center">
+      {note.id && (
+        <Flex w="full" justify="flex-end" transform="translateY(-100%)">
+          <DeleteNoteBtn nodeId={note.nodeId} />
+        </Flex>
+      )}
       <UpdateNoteArea />
     </Flex>
   )

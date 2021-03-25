@@ -1,8 +1,11 @@
 import { graphql } from 'babel-plugin-relay/macro'
 import { usePaginationFragment } from 'react-relay/hooks'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { useAtom } from 'jotai'
+import { useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
 
+import { refreshNoteAtom } from '@/utils/atom'
 import { NotesList_query$key } from '@/__generated__/NotesList_query.graphql'
 
 import Note from './Note'
@@ -12,6 +15,7 @@ type PropsType = {
 }
 
 export default function NotesList({ query }: PropsType) {
+  const [shouldRefresh] = useAtom(refreshNoteAtom)
   const {
     data,
     refetch,
@@ -46,6 +50,10 @@ export default function NotesList({ query }: PropsType) {
     `,
     query
   )
+
+  useEffect(() => {
+    if (shouldRefresh) refetch({}, { fetchPolicy: 'store-and-network' })
+  }, [shouldRefresh])
 
   const loadMore = () => {
     if (isLoadingNext) return

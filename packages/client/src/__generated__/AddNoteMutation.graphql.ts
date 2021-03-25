@@ -21,6 +21,7 @@ export type AddNoteMutationResponse = {
     readonly createNote: {
         readonly note: {
             readonly id: unknown;
+            readonly nodeId: string;
             readonly content: string;
             readonly createdAt: unknown | null;
             readonly updatedAt: unknown | null;
@@ -28,6 +29,8 @@ export type AddNoteMutationResponse = {
         readonly noteEdge: {
             readonly node: {
                 readonly id: unknown;
+                readonly nodeId: string;
+                readonly content: string;
                 readonly updatedAt: unknown | null;
                 readonly createdAt: unknown | null;
             };
@@ -48,6 +51,7 @@ mutation AddNoteMutation(
   createNote(input: $input) {
     note {
       id
+      nodeId
       content
       createdAt
       updatedAt
@@ -55,6 +59,8 @@ mutation AddNoteMutation(
     noteEdge {
       node {
         id
+        nodeId
+        content
         updatedAt
         createdAt
       }
@@ -82,17 +88,31 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "createdAt",
+  "name": "nodeId",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "content",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "updatedAt",
   "storageKey": null
 },
-v4 = [
+v6 = [
   {
     "alias": null,
     "args": [
@@ -116,15 +136,10 @@ v4 = [
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "content",
-            "storageKey": null
-          },
           (v2/*: any*/),
-          (v3/*: any*/)
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/)
         ],
         "storageKey": null
       },
@@ -145,8 +160,10 @@ v4 = [
             "plural": false,
             "selections": [
               (v1/*: any*/),
+              (v2/*: any*/),
               (v3/*: any*/),
-              (v2/*: any*/)
+              (v5/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -163,7 +180,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "AddNoteMutation",
-    "selections": (v4/*: any*/),
+    "selections": (v6/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -172,17 +189,17 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "AddNoteMutation",
-    "selections": (v4/*: any*/)
+    "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "4ea40611373cc535e1057a01c93a045a",
+    "cacheID": "9804b3f5409e5f79f48596770afb8c71",
     "id": null,
     "metadata": {},
     "name": "AddNoteMutation",
     "operationKind": "mutation",
-    "text": "mutation AddNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    note {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n    noteEdge {\n      node {\n        id\n        updatedAt\n        createdAt\n      }\n    }\n  }\n}\n"
+    "text": "mutation AddNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    note {\n      id\n      nodeId\n      content\n      createdAt\n      updatedAt\n    }\n    noteEdge {\n      node {\n        id\n        nodeId\n        content\n        updatedAt\n        createdAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a39bd603e38d058b6f30ffa92cc2c2de';
+(node as any).hash = '78bab39425be28946d1aee90e9ab6880';
 export default node;

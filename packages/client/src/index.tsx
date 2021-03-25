@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'jotai'
 import { RelayEnvironmentProvider } from 'react-relay/hooks'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 
@@ -16,7 +17,9 @@ ReactDOM.render(
     <ColorModeScript />
     <ChakraProvider>
       <RelayEnvironmentProvider environment={relayEnv}>
-        <App />
+        <Provider>
+          <App />
+        </Provider>
       </RelayEnvironmentProvider>
     </ChakraProvider>
   </>,

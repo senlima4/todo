@@ -7,3 +7,5 @@ export const noteAtom = atom({
   createdAt: '',
   updatedAt: '',
 })
+
+export const refreshNoteAtom = atom(false)

@@ -16,6 +16,7 @@ export default function AddNote({ humanId }: PropsType) {
       createNote(input: $input) {
         note {
           id
+          nodeId
           content
           createdAt
           updatedAt
@@ -23,6 +24,8 @@ export default function AddNote({ humanId }: PropsType) {
         noteEdge {
           node {
             id
+            nodeId
+            content
             updatedAt
             createdAt
           }
@@ -60,7 +63,7 @@ export default function AddNote({ humanId }: PropsType) {
           )
 
           if (newEdge) {
-            ConnectionHandler.insertEdgeAfter(connectionRecord, newEdge)
+            ConnectionHandler.insertEdgeBefore(connectionRecord, newEdge)
           }
         }
       },
