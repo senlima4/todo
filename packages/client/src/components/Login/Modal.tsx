@@ -6,6 +6,7 @@ import {
   useDisclosure,
   Modal as BaseModal,
 } from '@chakra-ui/react'
+import { useNavigation } from 'react-navi'
 import { useMutation } from 'react-relay/hooks'
 
 import {
@@ -16,6 +17,7 @@ import { LoginMutationNode } from '@/mutations/Login'
 import { Form } from './Form'
 
 export function Modal() {
+  const navigation = useNavigation()
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
   const [commit, isInFlight] = useMutation<LoginMutation>(LoginMutationNode)
 
@@ -28,7 +30,7 @@ export function Modal() {
             'todo-access',
             res.authenticate.jwtToken as string
           )
-          onClose()
+          navigation.navigate('/')
         }
       },
     })

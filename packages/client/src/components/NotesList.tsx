@@ -1,12 +1,12 @@
-import { graphql } from 'babel-plugin-relay/macro'
-import { usePaginationFragment } from 'react-relay/hooks'
-import InfiniteScroll from 'react-infinite-scroll-component'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
-import { useColorModeValue, Flex } from '@chakra-ui/react'
+import { graphql } from 'babel-plugin-relay/macro'
+import { usePaginationFragment } from 'react-relay/hooks'
+import { Flex, useColorModeValue } from '@chakra-ui/react'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
-import { refreshNoteAtom } from '@/utils/atom'
 import { NotesList_query$key } from '@/__generated__/NotesList_query.graphql'
+import { refreshNoteAtom } from '@/utils/atom'
 
 import NoteItem from './Note'
 
@@ -74,12 +74,14 @@ export default function NotesList({ query }: PropsType) {
         pullDownToRefresh
         pullDownToRefreshThreshold={50}
         pullDownToRefreshContent={
-          <h3 style={{ textAlign: 'center' }}>
+          <h3 style={{ textAlign: 'center', zIndex: 1 }}>
             &#8595; Pull down to refresh
           </h3>
         }
         releaseToRefreshContent={
-          <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+          <h3 style={{ textAlign: 'center', zIndex: 1 }}>
+            &#8593; Release to refresh
+          </h3>
         }
       >
         {data.allNotes &&

@@ -3,29 +3,23 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type EntryPointQueryVariables = {};
-export type EntryPointQueryResponse = {
+export type AllHumansQueryVariables = {};
+export type AllHumansQueryResponse = {
     readonly allHumans: {
         readonly totalCount: number;
     } | null;
-    readonly currentHuman: {
-        readonly id: unknown;
-    } | null;
 };
-export type EntryPointQuery = {
-    readonly response: EntryPointQueryResponse;
-    readonly variables: EntryPointQueryVariables;
+export type AllHumansQuery = {
+    readonly response: AllHumansQueryResponse;
+    readonly variables: AllHumansQueryVariables;
 };
 
 
 
 /*
-query EntryPointQuery {
+query AllHumansQuery {
   allHumans {
     totalCount
-  }
-  currentHuman {
-    id
   }
 }
 */
@@ -49,24 +43,6 @@ var v0 = [
       }
     ],
     "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "Human",
-    "kind": "LinkedField",
-    "name": "currentHuman",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
   }
 ];
 return {
@@ -74,7 +50,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "EntryPointQuery",
+    "name": "AllHumansQuery",
     "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -83,18 +59,18 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "EntryPointQuery",
+    "name": "AllHumansQuery",
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "b3c147e3e48de64e4758cbaab7ad70f4",
+    "cacheID": "d0de9451c382f1a040d2c566f4d933df",
     "id": null,
     "metadata": {},
-    "name": "EntryPointQuery",
+    "name": "AllHumansQuery",
     "operationKind": "query",
-    "text": "query EntryPointQuery {\n  allHumans {\n    totalCount\n  }\n  currentHuman {\n    id\n  }\n}\n"
+    "text": "query AllHumansQuery {\n  allHumans {\n    totalCount\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8941f30e9b81c21412a0c1c9f08737ae';
+(node as any).hash = 'bf790d75e1f04b3047023d796ccb1acf';
 export default node;

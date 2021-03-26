@@ -1,30 +1,17 @@
-import { useState, useCallback, Suspense } from 'react'
-import { Box } from '@chakra-ui/react'
+import { Suspense } from 'react'
+import { View, Router } from 'react-navi'
 
-import { QueryOptions } from '@/interfaces'
-import EntryPoint from '@/components/EntryPoint'
+import routes from '@/routes'
+import Layout from '@/components/Layout'
 
 export default function App() {
-  const [
-    refreshedQueryOptions,
-    setRefreshedQueryOptions,
-  ] = useState<QueryOptions>({ fetchPolicy: 'network-only' })
-
-  const refresh = useCallback(() => {
-    setRefreshedQueryOptions(prev => ({
-      fetchKey: (prev?.fetchKey ?? 0) + 1,
-      fetchPolicy: 'network-only',
-    }))
-  }, [])
-
   return (
-    <Box>
-      <Suspense fallback="Loading...">
-        <EntryPoint
-          refresh={refresh}
-          queryOptions={refreshedQueryOptions ?? {}}
-        />
-      </Suspense>
-    </Box>
+    <Router routes={routes}>
+      <Layout>
+        <Suspense fallback={null}>
+          <View />
+        </Suspense>
+      </Layout>
+    </Router>
   )
 }
