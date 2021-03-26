@@ -2,8 +2,8 @@ import { useAtom } from 'jotai'
 import { Text, Flex, Center } from '@chakra-ui/react'
 
 import { noteAtom } from '@/utils/atom'
-import DeleteNoteBtn from './DeleteNote'
-import UpdateNoteArea from './UpdateNote'
+import DeleteNoteBtn from './note/DeleteBtn'
+import UpdateNoteArea from './note/Editor'
 
 export default function NoteEditor() {
   const [note] = useAtom(noteAtom)

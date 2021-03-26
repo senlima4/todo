@@ -1,20 +1,20 @@
-import { graphql } from 'babel-plugin-relay/macro'
-import { useLazyLoadQuery } from 'react-relay/hooks'
 import {
-  useColorModeValue,
   Box,
   Flex,
   Text,
   Spacer,
   HStack,
+  useColorModeValue,
 } from '@chakra-ui/react'
+import { graphql } from 'babel-plugin-relay/macro'
+import { useLazyLoadQuery } from 'react-relay/hooks'
 
 import { DashboardQuery } from '@/__generated__/DashboardQuery.graphql'
 
-import AddNote from './AddNote'
 import ColorButton from './ColorButton'
-import NotesList from './NotesList'
-import NoteEditor from './NoteEditor'
+import NotesList from './note/NotesList'
+import AddNoteBtn from './note/AddBtn'
+import NoteEditor from './note/Editor'
 
 type PropsType = {
   humanId: string
@@ -49,7 +49,7 @@ export default function Dashboard({ humanId }: PropsType) {
               <Spacer />
               <HStack spacing={2} align="center">
                 <ColorButton />
-                <AddNote humanId={humanId} />
+                <AddNoteBtn humanId={humanId} />
               </HStack>
             </Flex>
           </Box>

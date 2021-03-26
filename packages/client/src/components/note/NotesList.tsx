@@ -8,7 +8,7 @@ import { useColorModeValue, Flex } from '@chakra-ui/react'
 import { refreshNoteAtom } from '@/utils/atom'
 import { NotesList_query$key } from '@/__generated__/NotesList_query.graphql'
 
-import Note from './Note'
+import NoteItem from './Note'
 
 type PropsType = {
   query: NotesList_query$key
@@ -84,7 +84,7 @@ export default function NotesList({ query }: PropsType) {
       >
         {data.allNotes &&
           data.allNotes.edges.map(({ node }) => (
-            <Note key={node.id as string} note={node} />
+            <NoteItem key={node.id as string} note={node} />
           ))}
       </InfiniteScroll>
     </Flex>

@@ -14,10 +14,10 @@ export type NoteInput = {
     id?: unknown | null;
     updatedAt?: unknown | null;
 };
-export type AddNoteMutationVariables = {
+export type CreateNoteMutationVariables = {
     input: CreateNoteInput;
 };
-export type AddNoteMutationResponse = {
+export type CreateNoteMutationResponse = {
     readonly createNote: {
         readonly note: {
             readonly id: unknown;
@@ -37,15 +37,15 @@ export type AddNoteMutationResponse = {
         } | null;
     } | null;
 };
-export type AddNoteMutation = {
-    readonly response: AddNoteMutationResponse;
-    readonly variables: AddNoteMutationVariables;
+export type CreateNoteMutation = {
+    readonly response: CreateNoteMutationResponse;
+    readonly variables: CreateNoteMutationVariables;
 };
 
 
 
 /*
-mutation AddNoteMutation(
+mutation CreateNoteMutation(
   $input: CreateNoteInput!
 ) {
   createNote(input: $input) {
@@ -179,7 +179,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AddNoteMutation",
+    "name": "CreateNoteMutation",
     "selections": (v6/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -188,18 +188,18 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AddNoteMutation",
+    "name": "CreateNoteMutation",
     "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "9804b3f5409e5f79f48596770afb8c71",
+    "cacheID": "ac1f35269d9daf2d564d35f383a16896",
     "id": null,
     "metadata": {},
-    "name": "AddNoteMutation",
+    "name": "CreateNoteMutation",
     "operationKind": "mutation",
-    "text": "mutation AddNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    note {\n      id\n      nodeId\n      content\n      createdAt\n      updatedAt\n    }\n    noteEdge {\n      node {\n        id\n        nodeId\n        content\n        updatedAt\n        createdAt\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    note {\n      id\n      nodeId\n      content\n      createdAt\n      updatedAt\n    }\n    noteEdge {\n      node {\n        id\n        nodeId\n        content\n        updatedAt\n        createdAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '78bab39425be28946d1aee90e9ab6880';
+(node as any).hash = 'e3bdf70fafa03054a7c3a3435c4ede3e';
 export default node;

@@ -1,30 +1,18 @@
 import { useAtom } from 'jotai'
 import { useMutation } from 'react-relay/hooks'
-import { graphql } from 'babel-plugin-relay/macro'
-import { Flex, Text, Textarea } from '@chakra-ui/react'
+import { Text, Flex, Center, Textarea } from '@chakra-ui/react'
 import { useRef, useState, useEffect, ChangeEventHandler } from 'react'
 
-import { noteAtom } from '@/utils/atom'
 import { UpdateNoteMutation } from '@/__generated__/UpdateNoteMutation.graphql'
+import { UpdateNoteMutationNode } from '@/mutations/UpdateNote'
+import { noteAtom } from '@/utils/atom'
 
-export default function UpdateNote() {
+export default function Editor() {
   const sender = useRef<number | null>(null)
   const [note, setNote] = useAtom(noteAtom)
-  const [firstLoad, setFirst] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [commit] = useMutation<UpdateNoteMutation>(graphql`
-    mutation UpdateNoteMutation($input: UpdateNoteInput!) {
-      updateNote(input: $input) {
-        note {
-          id
-          nodeId
-          content
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  `)
+  const [firstLoad, setFirst] = useState(true)
+  const [commit] = useMutation<UpdateNoteMutation>(UpdateNoteMutationNode)
 
   useEffect(() => {
     if (sender.current) clearTimeout(sender.current)
@@ -60,21 +48,19 @@ export default function UpdateNote() {
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = e => {
     if (firstLoad) setFirst(false)
-    setNote({
-      ...note,
-      content: e.target.value,
-    })
+    setNote({ ...note, content: e.target.value })
+  }
+
+  if (note.id.length === 0) {
+    return (
+      <Center w="full" h="100%">
+        <Text>Select Note</Text>
+      </Center>
+    )
   }
 
   return (
-    <Flex
-      pos="relative"
-      mx="auto"
-      w="75%"
-      maxW="968px"
-      align="center"
-      flexDir="column"
-    >
+    <Flex mx="auto" w="75%" maxW="968px" flexDir="column" align="center">
       {saving && (
         <Text pos="absolute" color="gray.300" top={0} right={4}>
           Saving..

@@ -6,8 +6,8 @@ import { Box, Flex, Skeleton } from '@chakra-ui/react'
 import { QueryOptions } from '@/interfaces'
 import { EntryPointQuery } from '@/__generated__/EntryPointQuery.graphql'
 
-import RegisterModal from './RegisterModal'
-import LoginModal from './LoginModal'
+import Register from './Register'
+import Login from './Login'
 import Dashboard from './Dashboard'
 
 type PropsType = {
@@ -15,6 +15,7 @@ type PropsType = {
   queryOptions: QueryOptions
 }
 
+// eslint-disable-next-line
 export default function EntryPoint({ refresh, queryOptions }: PropsType) {
   const data = useLazyLoadQuery<EntryPointQuery>(
     graphql`
@@ -31,8 +32,7 @@ export default function EntryPoint({ refresh, queryOptions }: PropsType) {
     queryOptions
   )
 
-  if (data.allHumans && data.allHumans.totalCount === 0)
-    return <RegisterModal />
+  if (data.allHumans && data.allHumans.totalCount === 0) return <Register />
 
   return (
     <>
@@ -57,7 +57,7 @@ export default function EntryPoint({ refresh, queryOptions }: PropsType) {
           <Dashboard humanId={data.currentHuman.id as string} />
         </Suspense>
       ) : (
-        <LoginModal onComplete={refresh} />
+        <Login />
       )}
     </>
   )

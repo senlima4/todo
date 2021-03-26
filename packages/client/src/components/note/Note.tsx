@@ -12,7 +12,7 @@ type PropsType = {
   note: Note_note$key
 }
 
-export default function Note({ note }: PropsType) {
+export default function NoteItem({ note }: PropsType) {
   const [currentNote, setNote] = useAtom(noteAtom)
   const blockBg = useColorModeValue('gray.100', 'gray.900')
   const textColor = useColorModeValue('gray.600', 'gray.300')

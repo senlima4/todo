@@ -7,43 +7,21 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
-import { useMutation } from 'react-relay/hooks'
-import { graphql } from 'babel-plugin-relay/macro'
 
-import {
-  LoginMutation,
-  AuthenticateInput,
-} from '@/__generated__/LoginMutation.graphql'
+import { AuthenticateInput } from '@/__generated__/LoginMutation.graphql'
 
 type PropsType = {
-  onClose: () => void
+  isLoading: boolean
+  submitFunc: (data: AuthenticateInput) => void
 }
 
-export default function Login({ onClose }: PropsType) {
+export function Form({ isLoading, submitFunc }: PropsType) {
   const { register, errors, handleSubmit } = useForm({
     defaultValues: { email: '', password: '' },
   })
-  const [commit, isInFlight] = useMutation<LoginMutation>(graphql`
-    mutation LoginMutation($input: AuthenticateInput!) {
-      authenticate(input: $input) {
-        jwtToken
-      }
-    }
-  `)
 
-  const onSubmit = (input: AuthenticateInput) => {
-    commit({
-      variables: { input },
-      onCompleted: res => {
-        if (res.authenticate) {
-          localStorage.setItem(
-            'todo-access',
-            res.authenticate.jwtToken as string
-          )
-          onClose()
-        }
-      },
-    })
+  const onSubmit = (data: AuthenticateInput) => {
+    submitFunc(data)
   }
 
   return (
@@ -84,7 +62,7 @@ export default function Login({ onClose }: PropsType) {
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
 
-      <Button mb={4} type="submit" isLoading={isInFlight}>
+      <Button mb={4} type="submit" isLoading={isLoading}>
         Login
       </Button>
     </Flex>

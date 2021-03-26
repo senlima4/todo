@@ -1,5 +1,3 @@
-import { ROOT_ID, RecordProxy, ConnectionHandler } from 'relay-runtime'
-import { graphql } from 'babel-plugin-relay/macro'
 import { useMutation } from 'react-relay/hooks'
 import { useAtom } from 'jotai'
 import {
@@ -15,44 +13,22 @@ import {
 } from '@chakra-ui/react'
 
 import { noteAtom, refreshNoteAtom } from '@/utils/atom'
-import { DeleteNoteMutation } from '@/__generated__/DeleteNoteMutation.graphql'
+import { DeleteNoteMutationNode } from '@/mutations/DeleteNote'
 
 type PropsType = {
   nodeId: string
 }
 
-export default function DeleteNote({ nodeId }: PropsType) {
+export default function DeleteBtn({ nodeId }: PropsType) {
   const [note, setNote] = useAtom(noteAtom)
   const [, setRefresh] = useAtom(refreshNoteAtom)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [commit, isInFlight] = useMutation<DeleteNoteMutation>(graphql`
-    mutation DeleteNoteMutation($input: DeleteNoteInput!) {
-      deleteNote(input: $input) {
-        deletedNoteId
-      }
-    }
-  `)
+  const [commit, isInFlight] = useMutation(DeleteNoteMutationNode)
 
   const handleDelete = () => {
     commit({
       variables: {
         input: { nodeId },
-      },
-      updater: store => {
-        const payload = store.getRootField('deleteNote')
-        const deletedNoteId = payload.getValue('deletedNoteId')
-
-        if (deletedNoteId) {
-          // eslint-disable-next-line
-          const rootRecord = store.get(ROOT_ID) as Readonly<RecordProxy<any>>
-          const connection = ConnectionHandler.getConnection(
-            rootRecord,
-            'Notes_allNotes'
-          )
-          if (connection) {
-            ConnectionHandler.deleteNode(connection, deletedNoteId)
-          }
-        }
       },
       onCompleted: () => {
         if (note.nodeId === nodeId) {

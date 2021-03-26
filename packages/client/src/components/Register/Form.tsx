@@ -7,36 +7,21 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
-import { useMutation } from 'react-relay/hooks'
-import { graphql } from 'babel-plugin-relay/macro'
 
 import { RegisterHumanInput } from '@/__generated__/RegisterMutation.graphql'
 
 type PropsType = {
-  onRegistered: () => void
+  isLoading: boolean
+  submitFunc: (data: RegisterHumanInput) => void
 }
 
-export default function Register({ onRegistered }: PropsType) {
+export function Form({ isLoading, submitFunc }: PropsType) {
   const { register, errors, handleSubmit } = useForm({
     defaultValues: { username: '', email: '', password: '' },
   })
-  const [commit, isInFlight] = useMutation(graphql`
-    mutation RegisterMutation($input: RegisterHumanInput!) {
-      registerHuman(input: $input) {
-        human {
-          username
-        }
-      }
-    }
-  `)
 
-  const onSubmit = (input: RegisterHumanInput) => {
-    commit({
-      variables: { input },
-      onCompleted: () => {
-        onRegistered()
-      },
-    })
+  const onSubmit = (data: RegisterHumanInput) => {
+    submitFunc(data)
   }
 
   return (
@@ -91,7 +76,7 @@ export default function Register({ onRegistered }: PropsType) {
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>
 
-      <Button mb={4} type="submit" isLoading={isInFlight}>
+      <Button mb={4} type="submit" isLoading={isLoading}>
         Confirm
       </Button>
     </Flex>
