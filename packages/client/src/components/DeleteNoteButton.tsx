@@ -1,4 +1,5 @@
 import { useMutation } from 'react-relay/hooks'
+import { useEffect } from 'react'
 import { useAtom } from 'jotai'
 import {
   useDisclosure,
@@ -12,18 +13,23 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 
-import { noteAtom, refreshNoteAtom } from '@/utils/atom'
+import { noteAtom, refetchNotesAtom } from '@/utils/atom'
 import { DeleteNoteMutationNode } from '@/mutations/DeleteNote'
 
 type PropsType = {
   nodeId: string
 }
 
-export default function DeleteBtn({ nodeId }: PropsType) {
-  const [note, setNote] = useAtom(noteAtom)
-  const [, setRefresh] = useAtom(refreshNoteAtom)
+export default function DeleteNoteButton({ nodeId }: PropsType) {
+  const [, setRefetch] = useAtom(refetchNotesAtom)
+  const [currentNoteId, setNoteId] = useAtom(noteAtom)
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [commit, isInFlight] = useMutation(DeleteNoteMutationNode)
+
+  useEffect(() => {
+    if (!currentNoteId) onClose()
+  }, [])
 
   const handleDelete = () => {
     commit({
@@ -31,24 +37,17 @@ export default function DeleteBtn({ nodeId }: PropsType) {
         input: { nodeId },
       },
       onCompleted: () => {
-        if (note.nodeId === nodeId) {
-          setNote({
-            id: '',
-            nodeId: '',
-            content: '',
-            createdAt: '',
-            updatedAt: '',
-          })
-          setRefresh(true)
-          onClose()
-        }
+        setNoteId(null)
+        setRefetch(true)
       },
     })
   }
 
   return (
     <>
-      <Button onClick={onOpen}>Delete</Button>
+      <Button size="sm" onClick={onOpen}>
+        Delete
+      </Button>
       <Modal isOpen={isOpen} isCentered onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

@@ -1,21 +1,17 @@
+import { graphql } from 'babel-plugin-relay/macro'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
-import { graphql } from 'babel-plugin-relay/macro'
 import { usePaginationFragment } from 'react-relay/hooks'
-import { Flex, useColorModeValue } from '@chakra-ui/react'
+import { List, useColorModeValue } from '@chakra-ui/react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import { NotesList_query$key } from '@/__generated__/NotesList_query.graphql'
-import { refreshNoteAtom } from '@/utils/atom'
+import { refetchNotesAtom } from '@/utils/atom'
 
 import NoteItem from './Note'
 
-type PropsType = {
-  query: NotesList_query$key
-}
-
-export default function NotesList({ query }: PropsType) {
-  const [shouldRefresh] = useAtom(refreshNoteAtom)
+export default function NotesList({ query }: { query: NotesList_query$key }) {
+  const [shouldRefetch] = useAtom(refetchNotesAtom)
   const listBg = useColorModeValue('gray.50', 'gray.800')
   const {
     data,
@@ -43,6 +39,7 @@ export default function NotesList({ query }: PropsType) {
           edges {
             node {
               id
+              nodeId
               ...Note_note
             }
           }
@@ -52,18 +49,26 @@ export default function NotesList({ query }: PropsType) {
     query
   )
 
-  useEffect(() => {
-    if (shouldRefresh) refetch({}, { fetchPolicy: 'store-and-network' })
-  }, [shouldRefresh])
-
   const loadMore = () => {
     if (isLoadingNext) return
     loadNext(10)
   }
 
+  useEffect(() => {
+    if (shouldRefetch) refetch({}, { fetchPolicy: 'store-and-network' })
+  }, [shouldRefetch])
+
   return (
-    <Flex w="full" h="full" flexDir="column" bgColor={listBg}>
+    <List
+      id="notes-list"
+      role="listbox"
+      w="full"
+      h="full"
+      flexDir="column"
+      bgColor={listBg}
+    >
       <InfiniteScroll
+        scrollableTarget="notes-list"
         dataLength={data.allNotes?.totalCount || 0}
         next={loadMore}
         hasMore={hasNext}
@@ -89,6 +94,6 @@ export default function NotesList({ query }: PropsType) {
             <NoteItem key={node.id as string} note={node} />
           ))}
       </InfiniteScroll>
-    </Flex>
+    </List>
   )
 }

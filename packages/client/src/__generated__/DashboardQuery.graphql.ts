@@ -4,8 +4,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type RootQueryVariables = {};
-export type RootQueryResponse = {
+export type DashboardQueryVariables = {};
+export type DashboardQueryResponse = {
     readonly allHumans: {
         readonly totalCount: number;
     } | null;
@@ -14,15 +14,15 @@ export type RootQueryResponse = {
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"NotesList_query">;
 };
-export type RootQuery = {
-    readonly response: RootQueryResponse;
-    readonly variables: RootQueryVariables;
+export type DashboardQuery = {
+    readonly response: DashboardQueryResponse;
+    readonly variables: DashboardQueryVariables;
 };
 
 
 
 /*
-query RootQuery {
+query DashboardQuery {
   ...NotesList_query
   allHumans {
     totalCount
@@ -36,7 +36,6 @@ fragment Note_note on Note {
   id
   nodeId
   content
-  createdAt
   updatedAt
 }
 
@@ -52,6 +51,7 @@ fragment NotesList_query on Query {
     edges {
       node {
         id
+        nodeId
         ...Note_note
         __typename
       }
@@ -115,7 +115,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RootQuery",
+    "name": "DashboardQuery",
     "selections": [
       (v1/*: any*/),
       {
@@ -147,7 +147,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "RootQuery",
+    "name": "DashboardQuery",
     "selections": [
       {
         "alias": null,
@@ -232,13 +232,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "updatedAt",
                     "storageKey": null
                   },
@@ -288,14 +281,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "76ea30602a5a6526071d1a4af7e35332",
+    "cacheID": "7cd5ecf5a71d5b716464eee44438dc7c",
     "id": null,
     "metadata": {},
-    "name": "RootQuery",
+    "name": "DashboardQuery",
     "operationKind": "query",
-    "text": "query RootQuery {\n  ...NotesList_query\n  allHumans {\n    totalCount\n  }\n  currentHuman {\n    ...useAuth_human\n  }\n}\n\nfragment Note_note on Note {\n  id\n  nodeId\n  content\n  createdAt\n  updatedAt\n}\n\nfragment NotesList_query on Query {\n  allNotes(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment useAuth_human on Human {\n  id\n  username\n}\n"
+    "text": "query DashboardQuery {\n  ...NotesList_query\n  allHumans {\n    totalCount\n  }\n  currentHuman {\n    ...useAuth_human\n  }\n}\n\nfragment Note_note on Note {\n  id\n  nodeId\n  content\n  updatedAt\n}\n\nfragment NotesList_query on Query {\n  allNotes(first: 10) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        nodeId\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment useAuth_human on Human {\n  id\n  username\n}\n"
   }
 };
 })();
-(node as any).hash = '183357e41d4e70b6f8cff4a627d24b49';
+(node as any).hash = 'cbf6ca355a167f051fe837a8f36f9b53';
 export default node;

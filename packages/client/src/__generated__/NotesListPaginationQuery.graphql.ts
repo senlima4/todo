@@ -30,7 +30,6 @@ fragment Note_note on Note {
   id
   nodeId
   content
-  createdAt
   updatedAt
 }
 
@@ -46,6 +45,7 @@ fragment NotesList_query_2HEEH6 on Query {
     edges {
       node {
         id
+        nodeId
         ...Note_note
         __typename
       }
@@ -197,13 +197,6 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
                     "name": "updatedAt",
                     "storageKey": null
                   },
@@ -242,14 +235,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4e40ec7913b47945c25cf3a8b9401b98",
+    "cacheID": "292a3c5d059c54aebd9bb1b2546095c6",
     "id": null,
     "metadata": {},
     "name": "NotesListPaginationQuery",
     "operationKind": "query",
-    "text": "query NotesListPaginationQuery(\n  $after: Cursor\n  $first: Int = 10\n) {\n  ...NotesList_query_2HEEH6\n}\n\nfragment Note_note on Note {\n  id\n  nodeId\n  content\n  createdAt\n  updatedAt\n}\n\nfragment NotesList_query_2HEEH6 on Query {\n  allNotes(first: $first, after: $after) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query NotesListPaginationQuery(\n  $after: Cursor\n  $first: Int = 10\n) {\n  ...NotesList_query_2HEEH6\n}\n\nfragment Note_note on Note {\n  id\n  nodeId\n  content\n  updatedAt\n}\n\nfragment NotesList_query_2HEEH6 on Query {\n  allNotes(first: $first, after: $after) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        nodeId\n        ...Note_note\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '486ae36a1666eafd043ad2f8e7b26d2d';
+(node as any).hash = '821ecd874a299d1a0351e5dbee2d8909';
 export default node;

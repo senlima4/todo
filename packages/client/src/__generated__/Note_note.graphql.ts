@@ -8,7 +8,6 @@ export type Note_note = {
     readonly id: unknown;
     readonly nodeId: string;
     readonly content: string;
-    readonly createdAt: unknown | null;
     readonly updatedAt: unknown | null;
     readonly " $refType": "Note_note";
 };
@@ -51,13 +50,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "createdAt",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "updatedAt",
       "storageKey": null
     }
@@ -65,5 +57,5 @@ const node: ReaderFragment = {
   "type": "Note",
   "abstractKey": null
 };
-(node as any).hash = '1198bd9fc811b9a9312cbbcc5cb832c1';
+(node as any).hash = '9f533bdf4ae6f9d79965b910cf9f9c4f';
 export default node;

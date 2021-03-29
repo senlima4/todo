@@ -3,29 +3,30 @@ import {
   Text,
   Flex,
   Spacer,
+  Center,
   HStack,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useAtom } from 'jotai'
+import { Suspense } from 'react'
 import { mount, route } from 'navi'
 import { loadQuery, usePreloadedQuery, PreloadedQuery } from 'react-relay'
 
-import { RootQuery } from '@/__generated__/RootQuery.graphql'
-import { RootQueryNode } from '@/queries/Root'
+import { DashboardQuery } from '@/__generated__/DashboardQuery.graphql'
+import { DashboardQueryNode } from '@/queries/Dashboard'
 import RelayEnvironment from '@/utils/relayEnv'
+import { noteAtom } from '@/utils/atom'
+import useAuth from '@/hooks/useAuth'
 import NotesList from '@/components/NotesList'
 import NoteEditor from '@/components/NoteEditor'
 import ColorButton from '@/components/ColorButton'
 import LogoutButton from '@/components/LogoutButton'
 import AddNoteButton from '@/components/AddNoteButton'
-import { useAuth } from '@/hooks/useAuth'
 
-type PropTypes = {
-  rootRef: PreloadedQuery<RootQuery>
-}
-
-function Dashboard({ rootRef }: PropTypes) {
+function Dashboard({ rootRef }: { rootRef: PreloadedQuery<DashboardQuery> }) {
+  const [currentNoteId] = useAtom(noteAtom)
   const themeColor = useColorModeValue('white', 'black')
-  const data = usePreloadedQuery<RootQuery>(RootQueryNode, rootRef)
+  const data = usePreloadedQuery<DashboardQuery>(DashboardQueryNode, rootRef)
 
   if (!data.currentHuman) return null
   const human = useAuth(data.currentHuman)
@@ -58,8 +59,16 @@ function Dashboard({ rootRef }: PropTypes) {
           <NotesList query={data} />
         </Box>
       </Flex>
-      <Flex w="100%" flex="auto" flexDir="column" pt={12}>
-        <NoteEditor />
+      <Flex w="full" h="full" flex="auto" flexDir="column">
+        {currentNoteId ? (
+          <Suspense fallback="Load note">
+            <NoteEditor />
+          </Suspense>
+        ) : (
+          <Center w="full" h="100%">
+            <Text>Select Note</Text>
+          </Center>
+        )}
       </Flex>
     </Flex>
   )
@@ -70,9 +79,9 @@ export default mount({
     title: 'Lander - Dashboard',
     view: (
       <Dashboard
-        rootRef={loadQuery<RootQuery>(
+        rootRef={loadQuery<DashboardQuery>(
           RelayEnvironment,
-          RootQueryNode,
+          DashboardQueryNode,
           {},
           { fetchPolicy: 'store-and-network' }
         )}

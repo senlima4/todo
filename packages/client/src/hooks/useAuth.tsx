@@ -9,7 +9,7 @@ import {
   useAuth_human$data,
 } from '@/__generated__/useAuth_human.graphql'
 
-export const useAuth = (humanRef: FragmentRef<useAuth_human>) => {
+export default function useAuth(humanRef: FragmentRef<useAuth_human>) {
   const navigation = useNavigation()
   const human = readInlineData<useAuth_human$data>(
     graphql`

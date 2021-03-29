@@ -16,6 +16,7 @@ export type NotesList_query = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: unknown;
+                readonly nodeId: string;
                 readonly " $fragmentRefs": FragmentRefs<"Note_note">;
             };
         }>;
@@ -153,6 +154,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "nodeId",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 },
@@ -182,5 +190,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '486ae36a1666eafd043ad2f8e7b26d2d';
+(node as any).hash = '821ecd874a299d1a0351e5dbee2d8909';
 export default node;

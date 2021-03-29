@@ -20,6 +20,7 @@
   ],
   "plugins": ["@typescript-eslint", "react-hooks"],
   "rules": {
+    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "import/no-named-as-default": "off",

@@ -43,6 +43,7 @@
     "react-icons": "^4.2.0",
     "react-infinite-scroll-component": "^6.0.0",
     "react-navi": "^0.14.4",
+    "react-navi-helmet-async": "^0.14.4",
     "react-relay": "^11.0.0",
     "react-scripts": "4.0.3",
     "relay-runtime": "^11.0.0",
