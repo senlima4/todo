@@ -8,19 +8,19 @@ import {
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 
-import { AuthenticateInput } from '@/__generated__/LoginMutation.graphql'
+import { RegisterHumanInput } from '@/__generated__/RegisterMutation.graphql'
 
 type PropsType = {
   isLoading: boolean
-  submitFunc: (data: AuthenticateInput) => void
+  submitFunc: (data: RegisterHumanInput) => void
 }
 
-export function Form({ isLoading, submitFunc }: PropsType) {
+export default function RegisterForm({ isLoading, submitFunc }: PropsType) {
   const { register, errors, handleSubmit } = useForm({
-    defaultValues: { email: '', password: '' },
+    defaultValues: { username: '', email: '', password: '' },
   })
 
-  const onSubmit = (data: AuthenticateInput) => {
+  const onSubmit = (data: RegisterHumanInput) => {
     submitFunc(data)
   }
 
@@ -31,6 +31,20 @@ export function Form({ isLoading, submitFunc }: PropsType) {
       flexDir="column"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <FormControl mb={4} isInvalid={Boolean(errors.username)}>
+        <FormLabel htmlFor="username">Username</FormLabel>
+        <Input
+          ref={register({
+            required: 'Required field',
+            minLength: { value: 5, message: 'At least 5 characters' },
+          })}
+          size="sm"
+          type="text"
+          name="username"
+        />
+        <FormErrorMessage>{errors.username?.message}</FormErrorMessage>
+      </FormControl>
+
       <FormControl mb={4} isInvalid={Boolean(errors.email)}>
         <FormLabel htmlFor="email">Email</FormLabel>
         <Input
@@ -63,7 +77,7 @@ export function Form({ isLoading, submitFunc }: PropsType) {
       </FormControl>
 
       <Button mb={4} type="submit" isLoading={isLoading}>
-        Login
+        Confirm
       </Button>
     </Flex>
   )

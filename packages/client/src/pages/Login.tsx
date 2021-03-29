@@ -1,13 +1,23 @@
-import { Box } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { mount, route } from 'navi'
 import { useNavigation } from 'react-navi'
-import { loadQuery, usePreloadedQuery, PreloadedQuery } from 'react-relay'
+import {
+  loadQuery,
+  PreloadedQuery,
+  useMutation,
+  usePreloadedQuery,
+} from 'react-relay'
+import { Center } from '@chakra-ui/react'
 
+import {
+  LoginMutation,
+  AuthenticateInput,
+} from '@/__generated__/LoginMutation.graphql'
+import { LoginMutationNode } from '@/mutations/Login'
 import { CurrentHumanQuery } from '@/__generated__/CurrentHumanQuery.graphql'
 import { CurrentHumanQueryNode } from '@/queries/CurrentHuman'
 import RelayEnvironment from '@/utils/relayEnv'
-import LoginModal from '@/components/Login'
+import LoginForm from '@/components/LoginForm'
 
 type PropTypes = {
   humanRef: PreloadedQuery<CurrentHumanQuery>
@@ -15,21 +25,35 @@ type PropTypes = {
 
 function Login({ humanRef }: PropTypes) {
   const navigation = useNavigation()
+  const [commit, isInFlight] = useMutation<LoginMutation>(LoginMutationNode)
   const data = usePreloadedQuery<CurrentHumanQuery>(
     CurrentHumanQueryNode,
     humanRef
   )
 
+  const login = (input: AuthenticateInput) => {
+    commit({
+      variables: { input },
+      onCompleted: res => {
+        if (res.authenticate) {
+          localStorage.setItem(
+            'todo-access',
+            res.authenticate.jwtToken as string
+          )
+          navigation.navigate('/')
+        }
+      },
+    })
+  }
+
   useEffect(() => {
-    if (data.currentHuman && data.currentHuman.id) {
-      navigation.navigate('/')
-    }
+    if (data.currentHuman && data.currentHuman.id) navigation.navigate('/')
   }, [])
 
   return (
-    <Box>
-      <LoginModal />
-    </Box>
+    <Center w="full" h="full">
+      <LoginForm isLoading={isInFlight} submitFunc={login} />
+    </Center>
   )
 }
 

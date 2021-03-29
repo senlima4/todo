@@ -1,12 +1,19 @@
-import { Box } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { mount, route } from 'navi'
 import { useNavigation } from 'react-navi'
-import { loadQuery, usePreloadedQuery, PreloadedQuery } from 'react-relay'
+import {
+  loadQuery,
+  PreloadedQuery,
+  useMutation,
+  usePreloadedQuery,
+} from 'react-relay'
+import { Center } from '@chakra-ui/react'
 
+import { RegisterHumanInput } from '@/__generated__/RegisterMutation.graphql'
 import { AllHumansQuery } from '@/__generated__/AllHumansQuery.graphql'
+import { RegisterMutationNode } from '@/mutations/Register'
 import { AllHumansQueryNode } from '@/queries/AllHumans'
-import RegisterModal from '@/components/Register'
+import RegisterForm from '@/components/RegisterForm'
 import RelayEnvironment from '@/utils/relayEnv'
 
 type PropTypes = {
@@ -15,18 +22,27 @@ type PropTypes = {
 
 function Register({ countRef }: PropTypes) {
   const data = usePreloadedQuery<AllHumansQuery>(AllHumansQueryNode, countRef)
+  const [commit, isInFlight] = useMutation(RegisterMutationNode)
   const navigation = useNavigation()
 
   useEffect(() => {
-    if (data.allHumans && data.allHumans.totalCount > 0) {
+    if (data.allHumans && data.allHumans.totalCount > 0)
       navigation.navigate('/login')
-    }
-  })
+  }, [])
+
+  const register = (input: RegisterHumanInput) => {
+    commit({
+      variables: { input },
+      onCompleted: () => {
+        window.location.reload()
+      },
+    })
+  }
 
   return (
-    <Box>
-      <RegisterModal />
-    </Box>
+    <Center w="full" h="full">
+      <RegisterForm submitFunc={register} isLoading={isInFlight} />
+    </Center>
   )
 }
 
